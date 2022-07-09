@@ -45,6 +45,8 @@ const listaProductos =[
         precio:900
     }
 ]
+//Textos
+
 const TEXTO_INGRESO_PRODUCTO_NOMBRE = "Ingrese el nombre del producto";
 // const TEXTO_INGRESO_PRODUCTO_NOMBRE_ERROR = "El valor es incorrecto. Pruebe otra vez";
 const TEXTO_INGRESO_PRODUCTO_ERROR = "El valor es incorrecto. Pruebe otra vez";
@@ -70,7 +72,7 @@ const validarNumero = (num, texto, textoError) =>{
     if (isNaN(num)){
         alert(textoError);
         num= ingresarDatos(texto, textoError);
-        num=validarNumero(num, texto, textoError);
+        num= validarNumero(num, texto, textoError);
     }
     return num;
         
@@ -87,6 +89,15 @@ const agregarProductos = () => {
     const productoAgregar= new Productos(listaProductos.length, nom, mod, tip, parseFloat(val));
     listaProductos.push(productoAgregar);
 }
+
+
+
+const sacarProductos = () => {
+    const porductoABuscar = ingresarDatos(TEXTO_INGRESO_PRODUCTO, TEXTO_INGRESO_PRODUCTO_ERROR);
+    const busqueda = listaProductos.map()
+}
+
+
 
 // // agregarProductos();
 // console.log(listaProductos)
