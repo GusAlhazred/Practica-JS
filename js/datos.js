@@ -48,6 +48,7 @@ const listaProductos =[
 //Textos
 
 const TEXTO_INGRESO_PRODUCTO_NOMBRE = "Ingrese el nombre del producto";
+const TEXTO_INGRESO_PRODUCTO_ID = "Ingrese el ID del producto";
 // const TEXTO_INGRESO_PRODUCTO_NOMBRE_ERROR = "El valor es incorrecto. Pruebe otra vez";
 const TEXTO_INGRESO_PRODUCTO_ERROR = "El valor es incorrecto. Pruebe otra vez";
 const TEXTO_INGRESO_PRODUCTO_MODELO = "Ingrese el modelo del producto";
@@ -90,14 +91,31 @@ const agregarProductos = () => {
     listaProductos.push(productoAgregar);
 }
 
-
-
-const sacarProductos = () => {
-    const porductoABuscar = ingresarDatos(TEXTO_INGRESO_PRODUCTO, TEXTO_INGRESO_PRODUCTO_ERROR);
-    const busqueda = listaProductos.map()
+const busqueda = () => {
+    const productoABuscar = ingresarDatos(TEXTO_INGRESO_PRODUCTO_NOMBRE, TEXTO_INGRESO_PRODUCTO_ERROR);
+    const busqueda = listaProductos.filter(buscar => buscar.nombre.includes(productoABuscar))
+    return busqueda
+}
+const confirmacion = () => {
+    return confirm("Desea remover el producto con ese ID?")
 }
 
+const sacarProductos = () => {
+    const listaFiltrados = busqueda();
+    console.log(listaFiltrados);
+    let productoARemover = ingresarDatos(TEXTO_INGRESO_PRODUCTO_ID, TEXTO_INGRESO_PRODUCTO_ERROR);
+    productoARemover = validarNumero(productoARemover, TEXTO_INGRESO_PRODUCTO_ID, TEXTO_INGRESO_PRODUCTO_ERROR);
+    if (confirmacion()){
+        listaProductos.splice(productoARemover, 1);
+    }else{
+        alert("No sacaste ningun producto")
+    }
+    console.log("La lista de productos actualmente esta de esta manera: ", listaProductos);
+    
+}
 
+console.log("La lista de productos actualmente esta de esta manera: ", listaProductos);
+sacarProductos()
 
 // // agregarProductos();
 // console.log(listaProductos)
