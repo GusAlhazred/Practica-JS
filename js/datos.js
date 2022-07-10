@@ -45,19 +45,14 @@ const listaProductos =[
         precio:900
     }
 ]
-//Textos
+///////////////////////// .-=[Textos]=-. /////////////////
 
 const TEXTO_INGRESO_PRODUCTO_NOMBRE = "Ingrese el nombre del producto";
 const TEXTO_INGRESO_PRODUCTO_ID = "Ingrese el ID del producto";
-// const TEXTO_INGRESO_PRODUCTO_NOMBRE_ERROR = "El valor es incorrecto. Pruebe otra vez";
 const TEXTO_INGRESO_PRODUCTO_ERROR = "El valor es incorrecto. Pruebe otra vez";
 const TEXTO_INGRESO_PRODUCTO_MODELO = "Ingrese el modelo del producto";
-// const TEXTO_INGRESO_PRODUCTO_MODELO_ERROR = "El valor es incorrecto. Pruebe otra vez";
 const TEXTO_INGRESO_PRODUCTO_TIPO = "Ingrese el tipo del producto";
-// const TEXTO_INGRESO_PRODUCTO_TIPO_ERROR = "El valor es incorrecto. Pruebe otra vez";
 const TEXTO_INGRESO_PRODUCTO_PRECIO = "Ingrese el precio del producto";
-// const TEXTO_INGRESO_PRODUCTO_PRECIO_ERROR = "El valor es incorrecto. Pruebe otra vez";
-
 
 const ingresarDatos = (texto, textoError) => {
     let dato = prompt(texto || "");
@@ -100,6 +95,14 @@ const confirmacion = () => {
     return confirm("Desea remover el producto con ese ID?")
 }
 
+const arreglarID = (limite) =>{
+    for (let productos of listaProductos){
+        if (productos.id > limite){
+            productos.id-=1;
+        } 
+    }
+}
+
 const sacarProductos = () => {
     const listaFiltrados = busqueda();
     console.log(listaFiltrados);
@@ -107,15 +110,13 @@ const sacarProductos = () => {
     productoARemover = validarNumero(productoARemover, TEXTO_INGRESO_PRODUCTO_ID, TEXTO_INGRESO_PRODUCTO_ERROR);
     if (confirmacion()){
         listaProductos.splice(productoARemover, 1);
+        arreglarID(productoARemover);
     }else{
         alert("No sacaste ningun producto")
     }
-    console.log("La lista de productos actualmente esta de esta manera: ", listaProductos);
-    
 }
 
 console.log("La lista de productos actualmente esta de esta manera: ", listaProductos);
-sacarProductos()
-
-// // agregarProductos();
-// console.log(listaProductos)
+sacarProductos();
+agregarProductos();
+console.log("La lista de productos actualmente esta de esta manera: ", listaProductos);
