@@ -47,15 +47,17 @@ const listaProductos =[
 ]
 ///////////////////////// .-=[Textos]=-. /////////////////
 
+const TEXTO_INGRESO_PRODUCTO_ERROR = "El valor es incorrecto. Pruebe otra vez";
 const TEXTO_INGRESO_PRODUCTO_NOMBRE = "Ingrese el nombre del producto";
 const TEXTO_INGRESO_PRODUCTO_ID = "Ingrese el ID del producto";
-const TEXTO_INGRESO_PRODUCTO_ERROR = "El valor es incorrecto. Pruebe otra vez";
 const TEXTO_INGRESO_PRODUCTO_MODELO = "Ingrese el modelo del producto";
 const TEXTO_INGRESO_PRODUCTO_TIPO = "Ingrese el tipo del producto";
 const TEXTO_INGRESO_PRODUCTO_PRECIO = "Ingrese el precio del producto";
+const TEXTO_INGRESO_PARAMETRO_BUSQUEDA = "Ingrese el parametro por el que quiere buscar (id, nombre, precio, id, tipo)";
+
 
 const ingresarDatos = (texto, textoError) => {
-    let dato = prompt(texto || "");
+    let dato = prompt(texto) || "";
     if (dato.trim()){
         return dato;
     }else{
@@ -85,10 +87,30 @@ const agregarProductos = () => {
     const productoAgregar= new Productos(listaProductos.length, nom, mod, tip, parseFloat(val));
     listaProductos.push(productoAgregar);
 }
+const buscarId = () => {
+    const productoABuscar = ingresarDatos(TEXTO_INGRESO_PRODUCTO_ID, TEXTO_INGRESO_PRODUCTO_ERROR);
+    const busqueda = listaProductos.filter(buscar => buscar.id.includes(productoABuscar))
+    return busqueda
+}
 
-const busqueda = () => {
+const buscarNombre = () => {
     const productoABuscar = ingresarDatos(TEXTO_INGRESO_PRODUCTO_NOMBRE, TEXTO_INGRESO_PRODUCTO_ERROR);
     const busqueda = listaProductos.filter(buscar => buscar.nombre.includes(productoABuscar))
+    return busqueda
+}
+const buscarModelo = () => {
+    const productoABuscar = ingresarDatos(TEXTO_INGRESO_PRODUCTO_MODELO, TEXTO_INGRESO_PRODUCTO_ERROR);
+    const busqueda = listaProductos.filter(buscar => buscar.modelo.includes(productoABuscar))
+    return busqueda
+}
+const buscarTipo = () => {
+    const productoABuscar = ingresarDatos(TEXTO_INGRESO_PRODUCTO_TIPO, TEXTO_INGRESO_PRODUCTO_ERROR);
+    const busqueda = listaProductos.filter(buscar => buscar.tipo.includes(productoABuscar))
+    return busqueda
+}
+const buscarPrecio = () => {
+    const productoABuscar = ingresarDatos(TEXTO_INGRESO_PRODUCTO_PRECIO, TEXTO_INGRESO_PRODUCTO_ERROR);
+    const busqueda = listaProductos.filter(buscar => buscar.precio.includes(productoABuscar))
     return busqueda
 }
 const confirmacion = () => {
@@ -104,7 +126,7 @@ const arreglarID = (limite) =>{
 }
 
 const sacarProductos = () => {
-    const listaFiltrados = busqueda();
+    const listaFiltrados = buscarNombre();
     console.log(listaFiltrados);
     let productoARemover = ingresarDatos(TEXTO_INGRESO_PRODUCTO_ID, TEXTO_INGRESO_PRODUCTO_ERROR);
     productoARemover = validarNumero(productoARemover, TEXTO_INGRESO_PRODUCTO_ID, TEXTO_INGRESO_PRODUCTO_ERROR);
@@ -116,7 +138,47 @@ const sacarProductos = () => {
     }
 }
 
+const realizarBusquedaCorrespondiente = (parametro) => {
+    let resultado;
+    switch (parametro) {
+        case "id":
+            resultado=buscarId()
+            break;
+        case "nombre":
+            resultado=buscarNombre()
+            break;
+        case "tipo":
+            resultado=buscarTipo()
+            break;
+        case "precio":
+            resultado=buscarPrecio()
+            break;
+        case "modelo":
+            resultado=buscarModelo()
+            break;
+        default:
+            console.log(parametro)
+            if (confirmacion){ //Avisar que no se entendio y preguntar si quiere ingresar otro
+                modificarProducto();
+            }else{
+                resultado="";
+            }
+            break;
+    }
+    return resultado;
+}
+
+const modificarProducto = () => {
+    const parametroDeBusqueda = toString(ingresarDatos(TEXTO_INGRESO_PARAMETRO_BUSQUEDA, TEXTO_INGRESO_PRODUCTO_ERROR)).toLowerCase();
+    realizarBusquedaCorrespondiente(parametroDeBusqueda);
+
+    
+
+}
+
+
 console.log("La lista de productos actualmente esta de esta manera: ", listaProductos);
-sacarProductos();
-agregarProductos();
+// sacarProductos();
+modificarProducto();
+// agregarProductos();
 console.log("La lista de productos actualmente esta de esta manera: ", listaProductos);
