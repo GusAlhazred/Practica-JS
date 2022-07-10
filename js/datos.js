@@ -58,12 +58,11 @@ const TEXTO_INGRESO_PARAMETRO_BUSQUEDA = "Ingrese el parametro por el que quiere
 
 const ingresarDatos = (texto, textoError) => {
     let dato = prompt(texto) || "";
-    if (dato.trim()){
-        return dato;
-    }else{
+    if (!(dato.trim())){
         alert(textoError);
         ingresarDatos(texto,textoError);
     }
+    return dato;
 }
 
 const validarNumero = (num, texto, textoError) =>{
@@ -88,8 +87,11 @@ const agregarProductos = () => {
     listaProductos.push(productoAgregar);
 }
 const buscarId = () => {
-    const productoABuscar = ingresarDatos(TEXTO_INGRESO_PRODUCTO_ID, TEXTO_INGRESO_PRODUCTO_ERROR);
-    const busqueda = listaProductos.filter(buscar => buscar.id.includes(productoABuscar))
+    let productoABuscar = ingresarDatos(TEXTO_INGRESO_PRODUCTO_ID, TEXTO_INGRESO_PRODUCTO_ERROR);
+    // productoABuscar= validarNumero(productoABuscar, TEXTO_INGRESO_PRODUCTO_ID,TEXTO_INGRESO_PRODUCTO_ERROR);
+    productoABuscar = validarNumero(productoABuscar, TEXTO_INGRESO_PRODUCTO_ID, TEXTO_INGRESO_PRODUCTO_ERROR);
+    console.log(productoABuscar);
+    const busqueda = listaProductos.filter(buscar => buscar.id.toString().includes(productoABuscar))
     return busqueda
 }
 
@@ -110,7 +112,8 @@ const buscarTipo = () => {
 }
 const buscarPrecio = () => {
     const productoABuscar = ingresarDatos(TEXTO_INGRESO_PRODUCTO_PRECIO, TEXTO_INGRESO_PRODUCTO_ERROR);
-    const busqueda = listaProductos.filter(buscar => buscar.precio.includes(productoABuscar))
+    productoABuscar= validarNumero(productoABuscar, TEXTO_INGRESO_PRODUCTO_PRECIO,TEXTO_INGRESO_PRODUCTO_ERROR);
+    const busqueda = listaProductos.filter(buscar => buscar.precio.toString().includes(productoABuscar))
     return busqueda
 }
 const confirmacion = () => {
@@ -157,26 +160,32 @@ const realizarBusquedaCorrespondiente = (parametro) => {
             resultado=buscarModelo()
             break;
         default:
-            console.log(parametro)
-            if (confirmacion){ //Avisar que no se entendio y preguntar si quiere ingresar otro
-                modificarProducto();
-            }else{
-                resultado="";
-            }
+            // console.log(parametro)
+            // if (confirmacion){ //Avisar que no se entendio y preguntar si quiere ingresar otro
+            //     modificarProducto();
+            // }else{
+            //     resultado="";
+            // }
             break;
     }
     return resultado;
 }
 
 const modificarProducto = () => {
-    const parametroDeBusqueda = toString(ingresarDatos(TEXTO_INGRESO_PARAMETRO_BUSQUEDA, TEXTO_INGRESO_PRODUCTO_ERROR)).toLowerCase();
-    realizarBusquedaCorrespondiente(parametroDeBusqueda);
+    const parametroDeBusqueda = ingresarDatos(TEXTO_INGRESO_PARAMETRO_BUSQUEDA, TEXTO_INGRESO_PRODUCTO_ERROR).toString().toLowerCase();
+    console.log(parametroDeBusqueda)
+    console.log(realizarBusquedaCorrespondiente(parametroDeBusqueda));
 
     
 
 }
 
-
+const espaciarBorrar = () => {
+    for (i=0; i>10; i++){
+        console.log("i")
+    }
+}
+espaciarBorrar()
 console.log("La lista de productos actualmente esta de esta manera: ", listaProductos);
 // sacarProductos();
 modificarProducto();
