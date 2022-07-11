@@ -72,8 +72,6 @@ const validarNumero = (num, texto, textoError) =>{
         num= validarNumero(num, texto, textoError);
     }
     return num;
-        
-
 }
 
 
@@ -173,8 +171,8 @@ const realizarBusquedaCorrespondiente = (parametro) => {
 
 const modificarProducto = () => {
     const parametroDeBusqueda = ingresarDatos(TEXTO_INGRESO_PARAMETRO_BUSQUEDA, TEXTO_INGRESO_PRODUCTO_ERROR).toString().toLowerCase();
-    console.log(parametroDeBusqueda)
-    console.log(realizarBusquedaCorrespondiente(parametroDeBusqueda));
+    console.log(parametroDeBusqueda);
+    realizarBusquedaCorrespondiente(parametroDeBusqueda);
 
     
 
@@ -185,9 +183,10 @@ const espaciarBorrar = () => {
         console.log("i")
     }
 }
-espaciarBorrar()
+
+espaciarBorrar();
 console.log("La lista de productos actualmente esta de esta manera: ", listaProductos);
-// sacarProductos();
-modificarProducto();
+sacarProductos();
+// modificarProducto();
 // agregarProductos();
 console.log("La lista de productos actualmente esta de esta manera: ", listaProductos);
